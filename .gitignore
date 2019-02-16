@@ -13,7 +13,7 @@ local_settings.py
 db.sqlite3
 
 # Environments
-.env
+simple_cms/.env
 .venv
 env/
 venv/
