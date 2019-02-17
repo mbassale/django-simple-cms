@@ -14,6 +14,8 @@ import os
 import environ
 root = environ.Path(__file__)
 env = environ.Env(
+    DEBUG=(bool, True),
+    PRODUCTION_SERVER_IP=(str, ''),
     EMAIL_HOST=(str, 'smtp.mailtrap.io'),
     EMAIL_HOST_USER=(str, ''),
     EMAIL_HOST_PASSWORD=(str, ''),
@@ -32,10 +34,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '17+azx3%euljo$%c3w#ky0z8=--g++1k&n)!g-um6)jgeg0j%y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG')
 
 ALLOWED_HOSTS = []
-
+if not DEBUG:
+    ALLOWED_HOSTS = [env.str('PRODUCTION_SERVER_IP')]
 
 # Application definition
 
@@ -129,6 +132,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
 # Media files
