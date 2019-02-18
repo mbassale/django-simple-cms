@@ -10,7 +10,10 @@ class Profile(models.Model):
     @property
     def full_name(self):
         """Returns the person's full name."""
-        return '%s %s' % (self.user.first_name, self.user.last_name)
+        if self.user.first_name and self.user.last_name:
+            return '%s %s' % (self.user.first_name, self.user.last_name)
+        else:
+            return self.user.username
 
     def __str__(self):
         return self.full_name + ' Profile'
