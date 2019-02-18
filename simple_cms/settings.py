@@ -15,7 +15,7 @@ import environ
 root = environ.Path(__file__)
 env = environ.Env(
     DEBUG=(bool, True),
-    PRODUCTION_SERVER_IP=(str, ''),
+    PRODUCTION_SERVER_HOST=(str, ''),
     EMAIL_HOST=(str, 'smtp.mailtrap.io'),
     EMAIL_HOST_USER=(str, ''),
     EMAIL_HOST_PASSWORD=(str, ''),
@@ -38,7 +38,7 @@ DEBUG = env.bool('DEBUG')
 
 ALLOWED_HOSTS = []
 if not DEBUG:
-    ALLOWED_HOSTS = [env.str('PRODUCTION_SERVER_IP')]
+    ALLOWED_HOSTS = [env.str('PRODUCTION_SERVER_HOST')]
 
 # Application definition
 
