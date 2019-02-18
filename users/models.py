@@ -7,8 +7,13 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
+    @property
+    def full_name(self):
+        """Returns the person's full name."""
+        return '%s %s' % (self.user.first_name, self.user.last_name)
+
     def __str__(self):
-        return self.user.username + ' Profile'
+        return self.full_name + ' Profile'
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
