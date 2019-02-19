@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
@@ -18,6 +19,17 @@ class PostListView(ListView):
     context_object_name = 'posts'
     ordering = ['-date_posted']
     paginate_by = 5
+
+
+class LatestPostListView(ListView):
+    model = Post
+    template_name = 'blog/latest_posts.html'
+    context_object_name = 'posts'
+    paginate_by = 5
+
+    def get_queryset(self):
+        limit_date = datetime.now() - timedelta(days=7)
+        return Post.objects.filter(date_posted__gt=limit_date).order_by('-date_posted')
 
 
 class UserPostListView(ListView):
